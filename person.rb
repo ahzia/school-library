@@ -1,3 +1,4 @@
+require 'date'
 require './corrector'
 class Person
   attr_accessor :name, :age
@@ -26,5 +27,9 @@ class Person
 
   def validate_name
     @name = @correct_instance.correct_name(@name)
+  end
+
+  def rent(book)
+    Rental.new(DateTime.now, self, book)
   end
 end
