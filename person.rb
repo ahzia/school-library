@@ -1,6 +1,7 @@
+require 'date'
 require './corrector'
 class Person
-  attr_accessor :name, :age
+  attr_accessor :name, :age, :rentals
   attr_reader :id
 
   def initialize(age, name = 'Unknown', parent_permission: true)
@@ -9,6 +10,7 @@ class Person
     @name = name
     @parent_permission = parent_permission
     @correct_instance = Corrector.new
+    @rentals = []
   end
 
   private
@@ -25,5 +27,9 @@ class Person
 
   def validate_name
     @name = @correct_instance.correct_name(@name)
+  end
+
+  def rent(book)
+    Rental.new(DateTime.now, self, book)
   end
 end
