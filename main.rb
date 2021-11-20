@@ -132,7 +132,7 @@ def print_message
   puts('5 - Create a rental')
   puts('6 - List all rental for a given person id')
   puts('7 - Exit')
-  number = gets.chomp
+  number = gets.chomp.to_i
   handle_input(number)
   puts('')
   print_message
