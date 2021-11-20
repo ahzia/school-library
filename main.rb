@@ -9,7 +9,7 @@ def create_student(age, name)
   if permission == 'y'
     Student.new(age, name)
   else
-    Student.new(age, name, false)
+    Student.new(age, name, parent_permission: false)
   end
 end
 
@@ -35,6 +35,7 @@ def create_person
     puts('Wrong Input')
     create_person
   end
+  puts('Person Created succefully')
 end
 
 def create_book
@@ -43,6 +44,7 @@ def create_book
   print('Author:')
   author = gets.chomp
   @books << Book.new(title, author)
+  puts('Book Created succefully')
 end
 
 def list_books
@@ -73,7 +75,9 @@ def person_object(id)
   nil
 end
 
-def print_rentals(id)
+def print_rentals
+  print('Person ID: ')
+  id = gets.chomp.to_i
   person = person_object(id)
   if person.nil?
     puts('Wrong Id')
@@ -86,7 +90,40 @@ def print_rentals(id)
   end
 end
 
-def handle_input
+def create_new_rental
+  puts('Select a book from following list by number:')
+  list_books
+  book_index = gets.chomp.to_i
+  puts('Select a person from following list by number:')
+  list_persons
+  person_index = gets.chomp.to_i
+  print('Date: ')
+  date = gets.chomp
+  Rental.new(date, @persons[person_index], @books[book_index])
+  puts('Rental created succefully')
+end
+
+def handle_input(number)
+  case number
+  when 1
+    list_books
+  when 2
+    list_persons
+  when 3
+    create_person
+  when 4
+    create_book
+  when 5
+    create_new_rental
+  when 6
+    print_rentals
+  else
+    puts 'Thank you for using our APP - Writed by Ahzia'
+    exit
+  end
+end
+
+def print_message
   puts('please choose an option by entering a number:')
   puts('1 - List all books')
   puts('2 - List all people')
@@ -96,40 +133,9 @@ def handle_input
   puts('6 - List all rental for a given person id')
   puts('7 - Exit')
   number = gets.chomp
-  case number
-  when '1'
-    list_books
-  when '2'
-    list_persons
-  when '3'
-    create_person
-    puts('Person Created succefully')
-  when '4'
-    create_book
-    puts('Book Created succefully')
-  when '5'
-    puts('Select a book from following list by number:')
-    list_books
-    book_index = gets.chomp.to_i
-    puts('Select a person from following list by number:')
-    list_persons
-    person_index = gets.chomp.to_i
-    print('Date: ')
-    date = gets.chomp
-    Rental.new(date, @persons[person_index], @books[book_index])
-    puts('Rental created succefully')
-  when '6'
-    print('Person ID: ')
-    id = gets.chomp.to_i
-    print_rentals(id)
-  when '7'
-    puts 'Thank you for using our APP'
-    puts 'Writed by Ah.zia'
-  else
-    puts('wrong number')
-  end
+  handle_input(number)
   puts('')
-  handle_input
+  print_message
 end
 
 def main
@@ -137,7 +143,7 @@ def main
   @persons = []
   puts('Welcome to School library App!')
   puts('')
-  handle_input
+  print_message
 end
 
 main
