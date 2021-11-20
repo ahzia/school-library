@@ -66,6 +66,26 @@ def list_persons
   end
 end
 
+def person_object(id)
+  @persons.each do |person|
+    return person if person.id == id
+  end
+  nil
+end
+
+def print_rentals(id)
+  person = person_object(id)
+  if person.nil?
+    puts('Wrong Id')
+  elsif person.rentals == []
+    puts('No rentals for this person')
+  else
+    person.rentals.each do |rent|
+      puts("Date: #{rent.date}, Book: #{rent.book.title} by #{rent.book.title}")
+    end
+  end
+end
+
 def handle_input
   puts('please choose an option by entering a number:')
   puts('1 - List all books')
@@ -76,7 +96,6 @@ def handle_input
   puts('6 - List all rental for a given person id')
   puts('7 - Exit')
   number = gets.chomp
-  puts(number)
   case number
   when '1'
     list_books
@@ -100,7 +119,12 @@ def handle_input
     Rental.new(date, @persons[person_index], @books[book_index])
     puts('Rental created succefully')
   when '6'
+    print('Person ID: ')
+    id = gets.chomp.to_i
+    print_rentals(id)
   when '7'
+    puts 'Thank you for using our APP'
+    puts 'Writed by Ah.zia'
   else
     puts('wrong number')
   end
