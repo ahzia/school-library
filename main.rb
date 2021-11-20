@@ -1,6 +1,7 @@
 require './student'
 require './teacher'
 require './book'
+require './rental'
 
 def create_student(age, name)
   print('Has Parent Permission [y/n]:')
@@ -45,19 +46,23 @@ def create_book
 end
 
 def list_books
+  i = 0
   @books.each do |book|
-    puts("title: #{book.title}, author: #{book.author}")
+    puts("#{i}) title: #{book.title}, author: #{book.author}")
+    i += 1
   end
 end
 
 def list_persons
+  i = 0
   @persons.each do |person|
     if person.is_a?(Teacher)
       print '[Teacher] '
     else
       print '[Student] '
     end
-    puts("Name: #{person.name}, ID: #{person.id}, Age: #{person.age}")
+    puts("#{i}) Name: #{person.name}, ID: #{person.id}, Age: #{person.age}")
+    i += 1
   end
 end
 
@@ -84,6 +89,16 @@ def handle_input
     create_book
     puts('Book Created succefully')
   when '5'
+    puts('Select a book from following list by number:')
+    list_books
+    book_index = gets.chomp.to_i
+    puts('Select a person from following list by number:')
+    list_persons
+    person_index = gets.chomp.to_i
+    print('Date: ')
+    date = gets.chomp
+    Rental.new(date, @persons[person_index], @books[book_index])
+    puts('Rental created succefully')
   when '6'
   when '7'
   else
