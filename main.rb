@@ -1,5 +1,7 @@
 require './student'
 require './teacher'
+require './book'
+
 def create_student(age, name)
   print('Has Parent Permission [y/n]:')
   permission = gets.chomp
@@ -25,13 +27,21 @@ def create_person
   name = gets.chomp
   case input
   when '1'
-    create_student(age, name)
+    @persons << create_student(age, name)
   when '2'
-    create_teacher(age, name)
+    @persons << create_teacher(age, name)
   else
     puts('Wrong Input')
     create_person
   end
+end
+
+def create_book
+  print('title:')
+  title = gets.chomp
+  print('Author:')
+  author = gets.chomp
+  @books << Book.new(title, author)
 end
 
 def handle_input
@@ -39,7 +49,7 @@ def handle_input
   puts('1 - List all books')
   puts('2 - List all people')
   puts('3 - Create a person')
-  puts('4 - List all people')
+  puts('4 - Create a book')
   puts('5 - Create a rental')
   puts('6 - List all rental for a given person id')
   puts('7 - Exit')
@@ -51,18 +61,24 @@ def handle_input
   when '3'
     create_person
     puts('Person Created succefully')
-    handle_input
   when '4'
+    create_book
+    puts('Book Created succefully')
   when '5'
   when '6'
   when '7'
   else
     puts('wrong number')
   end
+  puts('')
+  handle_input
 end
 
 def main
-  puts('Welcome to School library App!\n')
+  @books = []
+  @persons = []
+  puts('Welcome to School library App!')
+  puts('')
   handle_input
 end
 
