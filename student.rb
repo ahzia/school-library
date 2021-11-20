@@ -8,7 +8,7 @@ class Student < Person
   end
 
   def initialize(age, name = 'Unknown', parent_permission: true)
-    super(age, name, parent_permission)
+    super(age, name, parent_permission: parent_permission)
   end
 
   def play_hooky
