@@ -44,6 +44,23 @@ def create_book
   @books << Book.new(title, author)
 end
 
+def list_books
+  @books.each do |book|
+    puts("title: #{book.title}, author: #{book.author}")
+  end
+end
+
+def list_persons
+  @persons.each do |person|
+    if person.is_a?(Teacher)
+      print '[Teacher] '
+    else
+      print '[Student] '
+    end
+    puts("Name: #{person.name}, ID: #{person.id}, Age: #{person.age}")
+  end
+end
+
 def handle_input
   puts('please choose an option by entering a number:')
   puts('1 - List all books')
@@ -57,7 +74,9 @@ def handle_input
   puts(number)
   case number
   when '1'
+    list_books
   when '2'
+    list_persons
   when '3'
     create_person
     puts('Person Created succefully')
